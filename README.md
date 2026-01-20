@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📚 IELTS Booster - AI-Powered IELTS Practice Platform
 
-## Getting Started
+An intelligent IELTS preparation platform featuring AI-powered scoring, real-time feedback, and comprehensive practice modules for all four IELTS sections.
 
-First, run the development server:
+## 🎯 Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+IELTS Booster is a full-stack web application designed to help students achieve their target IELTS band scores through:
+- **AI-Powered Scoring**: Automated essay and speaking evaluation
+- **Comprehensive Practice**: All 4 IELTS modules (Reading, Writing, Listening, Speaking)
+- **Real-time Feedback**: Instant performance insights and improvement suggestions
+- **Progress Tracking**: Detailed analytics and score history
+- **Study Material**: List of necessary materials for IELTS
+- **Individual Project** | Full-stack Project | 2025-2026
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ✅ Sprint 1 - Complete (Authentication & UI Foundation)
+- 🔐 User authentication (Login/Signup)
+- 🎨 Professional UI with Tailwind CSS
+- 🔒 Secure password validation 
+- 📱 Responsive design (Mobile & Desktop)
+- 🧩 Reusable component architecture
+![LoginPage](./docs/screenshots/login-page.png)
+![SignUpPage](./docs/screenshots/sign-up-page.png)
 
-## Learn More
+### 🚧 In Progress
+- 📊 Dashboard with performance analytics
+- ✍️ Writing module with AI scoring
+- 📖 Reading comprehension tests
+- 🎧 Listening practice with audio
+- 🗣️ Speaking module with Whisper AI transcription
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Frontend
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS
+- **UI Components**: Custom component library, MUI
+- **State Management**: React Hooks
 
-## Deploy on Vercel
+### Backend (Planed)
+- **Authentication**: NextAuth.js v5
+- **Database**: Prisma ORM with SQLite (dev) / PostgreSQL (production)
+- **Password Security**: bcrypt
+- **API**: Next.js API Routes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### AI Integration (Planned)
+- **Essay Scoring**: OpenAI GPT-4 / Claude API
+- **Speech-to-Text**: OpenAI Whisper API
+- **Feedback Generation**: Custom prompts with LLM
