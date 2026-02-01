@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Button from '@/components/ui/Button';
+
 export default function SocialLogin() {
   return (
     <>
@@ -13,21 +15,37 @@ export default function SocialLogin() {
 
       {/* Social Buttons */}
       <div className="grid grid-cols-2 gap-4">
-        <button
+        <Button
           type="button"
-          className="flex items-center justify-center gap-2 h-11 border border-gray-200 rounded-lg bg-white hover:bg-gray-100 transition-colors"
+          variant="social"
+          size="social"
+          icon={
+            <Image 
+              src="/images/google-logo.png" 
+              alt="Google Logo"
+              width={20}
+              height={20}
+            />
+          }
         >
-          <Image src="/images/google-icon.png" alt="Google" width={20} height={20} />
-          <span className="text-sm font-semibold text-gray-700">Google</span>
-        </button>
+          Google
+        </Button>
         
-        <button
+        <Button
           type="button"
-          className="flex items-center justify-center gap-2 h-11 border border-gray-200 rounded-lg bg-white hover:bg-gray-100 transition-colors"
+          variant="social"
+          size="social"
+          icon={
+            <Image 
+              src="/images/facebook-logo.png" 
+              alt="Facebook Logo"
+              width={20}
+              height={20}
+            />
+          }
         >
-          <Image src="/images/facebook-icon.png" alt="Facebook" width={20} height={20} />
-          <span className="text-sm font-semibold text-gray-700">Facebook</span>
-        </button>
+          Apple
+        </Button>
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BRAND } from "@/lib/constants";
 export default function AuthHero() {
     return (
         <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
@@ -22,7 +23,7 @@ export default function AuthHero() {
                             />
                         </span>
                     </div>
-                    <h2 className="text-2xl font-bold tracking-tight">IELTS BOOSTER</h2>
+                    <h2 className="text-2xl font-bold tracking-tight">{BRAND.name}</h2>
                 </div>
 
                 {/* Text Content */}

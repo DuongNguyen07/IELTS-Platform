@@ -108,7 +108,7 @@ export default function LoginForm() {
           </Link>
         </div>
 
-        <Button type="submit" variant="primary" disabled={loading}>
+        <Button type="submit" variant="primary" size="medium" disabled={loading}>
           {loading ? 'Signing in...' : 'Login'}
         </Button>
       </form>

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', 
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,9 +9,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#667eea',
-        'primary-dark': '#5568d3',
+        primary: '#2b6cee',       
+        'primary-dark': '#1d4ed8',
         secondary: '#764ba2',
+        navy: '#0d121b',          
+        'teal-accent': '#14b8a6', 
       },
     },
   },
