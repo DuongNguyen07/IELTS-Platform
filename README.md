@@ -16,14 +16,45 @@ IELTS Booster is a full-stack web application designed to help students achieve 
 
 ## ✨ Features
 
-### ✅ Sprint 1 - Complete (Authentication & UI Foundation)
-- 🔐 User authentication (Login/Signup)
-- 🎨 Professional UI with Tailwind CSS
-- 🔒 Secure password validation 
-- 📱 Responsive design (Mobile & Desktop)
-- 🧩 Reusable component architecture
+### ✅ Sprint 2 - Complete Authentication System + Database Integration
+-  User signup with validation (8+ chars, uppercase, number, special char)
+-  User login with NextAuth.js JWT sessions
+-  Password hashing with bcryptjs (12 rounds)
+-  Session management with secure httpOnly cookies
+-  Route protection via middleware
+Pages & UI:
+- Landing page (Hero, Features, CTA, Footer)
+- Login page with social auth placeholders
+- Signup page with real-time password validation
+- Dashboard with user session and stats
+- Responsive design (mobile + desktop)
 ![LoginPage](./docs/screenshots/login-page.png)
 ![SignUpPage](./docs/screenshots/sign-up-page.png)
+![LandingPage](./docs/screenshots/landing-page1.png)
+![LandingPage](./docs/screenshots/landing-page.png)
+
+Database Integration:
+- PostgreSQL connection via Supabase
+- Prisma ORM with complete schema
+- User model with profile tracking
+- Test, Score, Progress, StudyGoal models
+- NextAuth session storage in database
+
+Components Created:
+- Layout: Header, Footer, Container
+- Sections: Hero, Features, CTA
+- UI: Button, Input, PasswordInput, Alert, Card
+- Auth: LoginForm, SignupForm, SocialLogin
+- Providers: ClientProviders (SessionProvider wrapper)
+
+Security Implementations:
+- Input sanitization (XSS prevention)
+- Password validation (client + server)
+- Rate limiting on API routes
+- SQL injection prevention (Prisma ORM)
+- Environment variables for secrets
+- Security headers in responses
+- Protected API routes with session checks
 
 ### 🚧 In Progress
 - 📊 Dashboard with performance analytics
