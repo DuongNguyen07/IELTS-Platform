@@ -1,0 +1,204 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// USER MODEL - Core Authentication
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  
+  // Profile Info
+  targetScore   Float?    @default(7.0)
+  currentBand   Float?
+  studyHours    Int?      @default(0)
+  plan          String    @default("free")
+  planExpiry    DateTime?
+  
+  // Progress Tracking
+  journeyProgress Float?  @default(0) 
+  lastActivity    DateTime?
+  
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  tests         Test[]
+  scores        Score[]
+  progress      Progress[]     
+  studyGoals    StudyGoal[]   
+  sessions      Session[]
+  accounts      Account[]
+  
+  @@map("users")
+}
+
+// TEST MODEL - Practice Tests
+
+model Test {
+  id            String    @id @default(cuid())
+  userId        String
+  moduleType    String    // reading, writing, listening, speaking
+  testType      String    // diagnostic, practice, mock
+  content       String    @default("")
+  userResponse  String?
+  audioUrl      String?
+  transcription String?
+  status        String    @default("in_progress") // in_progress, completed, abandoned
+  startedAt     DateTime  @default(now())
+  completedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  score         Score?
+  
+  @@map("tests")
+  @@index([userId])
+  @@index([moduleType])
+  @@index([status])
+}
+
+// SCORE MODEL - Test Results
+model Score {
+  id                    String    @id @default(cuid())
+  userId                String
+  testId                String    @unique
+  
+  // Overall Score
+  overallBand           Float
+  
+  // Writing Scores
+  taskAchievement       Float?
+  coherenceCohesion     Float?
+  lexicalResource       Float?
+  grammaticalRange      Float?
+  
+  // Speaking Scores
+  fluencyCoherence      Float?
+  pronunciation         Float?
+  
+  // Module Scores
+  listening             Float?
+  reading               Float?
+  writing               Float?
+  speaking              Float?
+  
+  // AI Feedback
+  aiFeedback            String?
+  strengths             String?
+  improvements          String?
+  
+  createdAt             DateTime  @default(now())
+  
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  test                  Test      @relation(fields: [testId], references: [id], onDelete: Cascade)
+  
+  @@map("scores")
+  @@index([userId])
+  @@index([overallBand])
+}
+
+// PROGRESS MODEL - Learning Progress
+
+model Progress {
+  id              String    @id @default(cuid())
+  userId          String
+  
+  moduleType      String    // writing, reading, listening, speaking
+  lessonId        String
+  lessonTitle     String    @default("")
+  
+  status          String    @default("not_started") 
+  progressPercent Float     @default(0)
+  timeRemaining   Int?      // in minutes
+  
+  lastAccessed    DateTime  @default(now())
+  completedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, lessonId])  
+  @@map("progress")
+  @@index([userId])
+  @@index([status])
+}
+
+// STUDY GOAL MODEL - Target Setting 
+
+model StudyGoal {
+  id             String   @id @default(cuid())
+  userId         String
+  
+  targetBand     Float
+  targetDate     DateTime
+  hoursPerWeek   Int      @default(10)
+  
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("study_goals")
+  @@index([userId])
+  @@index([isActive])
+}
+
+// SESSION MODEL - NextAuth Sessions
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("sessions")
+  @@index([sessionToken])
+}
+
+// ============================================
+// ACCOUNT MODEL - OAuth Providers
+// ============================================
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// VERIFICATION TOKEN - Email Verification
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
