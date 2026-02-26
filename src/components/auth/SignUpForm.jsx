@@ -96,7 +96,7 @@ export default function SignupForm() {
     <div className="w-full max-w-md space-y-8">
       {/* Mobile Logo */}
       <div className="lg:hidden flex items-center gap-2 mb-8">
-        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+        <div className="w-8 h-8 bg-blue-200 rounded-lg flex items-center justify-center text-white">
           <span>
             <Image src="/images/logo-icon.png" alt="IELTS Booster Logo" width={20} height={20} />
           </span>
