@@ -66,7 +66,7 @@ Security:
 ![LandingPage](./docs/screenshots/landing-page1.png)
 ![LandingPage](./docs/screenshots/landing-page.png)
 ![DashboardPage](./docs/screenshots/dashboard-page.png)
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **Framework**: Next.js 15 (App Router)
