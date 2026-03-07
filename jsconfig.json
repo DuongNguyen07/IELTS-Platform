@@ -2,8 +2,30 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/app/*": ["./src/app/*"],
+      
+      "@/client/*": ["./client/*"],
+      "@/components": ["./client/components"],
+      "@/components/*": ["./client/components/*"],
+      "@/hooks/*": ["./client/hooks/*"],
+      "@/styles/*": ["./client/styles/*"],
+      "@/styles/globals.css": ["./client/styles/globals.css"],
+      "@/utils/client/*": ["./client/utils/*"],
+      
+      "@/server": ["./server"],
+      "@/server/*": ["./server/*"],
+      "@/api/*": ["./server/api/*"],
+      "@/services/*": ["./server/services/*"],
+      "@/middleware/*": ["./server/middleware/*"],
+      "@/lib/*": ["./server/lib/*"],
+      "@/config/*": ["./server/config/*"],
+      
+      "@/shared": ["./shared"],
+      "@/shared/*": ["./shared/*"],
+      "@/constants": ["./shared/constants"],
+      "@/validation": ["./shared/validation"],
+      "@/utils/shared/*": ["./shared/utils/*"]
     }
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".next"]
 }

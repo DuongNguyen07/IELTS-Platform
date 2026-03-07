@@ -1,6 +1,5 @@
-import './globals.css';
+import '@/client/styles/globals.css';
 import ClientProviders from '@/components/providers/ClientProviders';
-
 export const metadata = {
   title: 'IELTS Booster',
   description: 'Master the IELTS with Confidence',

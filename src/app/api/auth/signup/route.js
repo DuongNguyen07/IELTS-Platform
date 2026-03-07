@@ -1,20 +1,34 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import prisma from '@/lib/prisma';
-import { validateEmail, validatePassword, validateName, sanitizeInput } from '@/lib/validation'; // ← SHARED
-import { logSecurityEvent, checkRateLimit } from '@/lib/apiAuth';
+import { 
+  validateEmail, 
+  validatePassword, 
+  validateName, 
+} from '@/shared/validation'; 
+import { sanitizeInput } from '@/shared/sanitize';
+import { checkRateLimit } from '@/server/middleware/rateLimit';
+import { logSecurityEvent } from '@/server/services/securityLog.service';
+import { signup } from '@/server/services/auth.service';
 
 export async function POST(req) {
   try {
-    // 1. Rate limiting
-    const rateLimitError = checkRateLimit('signup_global', 10, 60000);
-    if (rateLimitError) return rateLimitError;
+    const rateLimitResult = await checkRateLimit('signup_global', 10, 60000);
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: 'Too many signup attempts. Please try again later.' },
+        { status: 429 }
+      );
+    }
 
     // 2. Parse request
-    const body = await req.json();
-    let { name, email, password } = body;
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+    }
 
     // 3. Sanitize inputs
+    let { name, email, password } = body;
     name = sanitizeInput(name);
     email = sanitizeInput(email?.toLowerCase());
 
@@ -37,35 +51,13 @@ export async function POST(req) {
       );
     }
 
-    // 5. Check if user exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email }
-    });
-
-    if (existingUser) {
-      await logSecurityEvent('SIGNUP_DUPLICATE', null, { email });
-      return NextResponse.json(
-        { error: 'An account with this email already exists' },
-        { status: 409 }
-      );
-    }
-
-    // 6. Hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // 7. Create user
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-      },
-    });
-
-    // 8. Log success
+    // 5. Check if user already exists and create account
+    const user = await signup(name, email, password);
+    
+    // 6. Log success
     await logSecurityEvent('SIGNUP_SUCCESS', user.id, { email });
 
-    // 9. Return success
+    // 7. Return success
     return NextResponse.json(
       { 
         success: true,
@@ -80,12 +72,18 @@ export async function POST(req) {
     );
 
   } catch (error) {
-    console.error('Signup error:', error);
-    await logSecurityEvent('SIGNUP_ERROR', null, { error: error.message });
-    
+  if (error.message === "EMAIL_EXISTS") {
     return NextResponse.json(
-      { error: 'Failed to create account. Please try again.' },
-      { status: 500 }
+      { error: "An account with this email already exists" },
+      { status: 409 }
     );
   }
+
+  console.error("Signup error:", error);
+
+  return NextResponse.json(
+    { error: "Failed to create account. Please try again." },
+    { status: 500 }
+  );
+}
 }

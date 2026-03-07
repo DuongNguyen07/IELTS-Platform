@@ -1,20 +1,15 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
+import prisma from '@/server/lib/prisma';
+import { requireAuth } from '@/server/middleware/auth';
 
 export async function GET(req) {
   try {
-    // 1. Get authenticated user from JWT
-    const session = await getServerSession(authOptions);
+    // Get authenticated user
+    const { session, user } = await requireAuth();
     
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // 2. Fetch user data with relations
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email },
+    // Fetch user data with relations
+    const userWithRelations = await prisma.user.findUnique({
+      where: { id: user.id },
       include: {
         progress: {
           where: { status: 'in_progress' },
@@ -22,49 +17,83 @@ export async function GET(req) {
           take: 1
         },
         tests: {
-          orderBy: { createdAt: 'desc' },
+          where: { status: 'completed' },
+          orderBy: { completedAt: 'desc' },
           take: 5,
           include: { score: true }
         },
         studyGoals: {
-          where: { isActive: true }
+          where: { isActive: true },
+          take: 1
         }
       }
     });
 
-    // 3. Calculate statistics
-    const totalTests = await prisma.test.count({
-      where: { userId: user.id, status: 'completed' }
-    });
+    if (!userWithRelations) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
 
-    const averageScore = await prisma.score.aggregate({
-      where: { userId: user.id },
-      _avg: { overallBand: true }
-    });
+    // Calculate statistics — run in parallel
+    const [totalTests, averageScore, totalProgress] = await Promise.all([
+      prisma.test.count({
+        where: { userId: user.id, status: 'completed' },
+      }),
+      prisma.score.aggregate({
+        where: { userId: user.id },
+        _avg: { overallBand: true },
+      }),
+      prisma.progress.count({
+        where: { userId: user.id, status: 'completed' },
+      }),
+    ]);
 
-    // 4. Return dashboard data
+    // Get continue learning data
+    const continueLearning = userWithRelations.progress[0] || null;
+
+    // Return dashboard data
     return NextResponse.json({
       user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        plan: user.plan,
-        targetScore: user.targetScore,
-        currentBand: averageScore._avg.overallBand || 0,
-        journeyProgress: user.journeyProgress || 0,
-        studyHours: user.studyHours || 0,
+        id: userWithRelations.id,
+        name: userWithRelations.name,
+        email: userWithRelations.email,
+        targetScore: userWithRelations.targetScore || 7.0,
+        currentBand: userWithRelations.currentBand || averageScore._avg.overallBand || 0,
+        journeyProgress: userWithRelations.journeyProgress || 0,
+        studyHours: userWithRelations.studyHours || 0,
+        plan: userWithRelations.plan || 'free',
+        joinedDate: userWithRelations.createdAt,
       },
-      continueLearning: user.progress[0] || null,
+      continueLearning: continueLearning ? {
+        id: continueLearning.id,
+        title: continueLearning.lessonTitle,
+        description: continueLearning.moduleType,
+        progress: continueLearning.progressPercent,
+        lastAccessed: continueLearning.lastAccessed,
+        url: `/dashboard/lessons/${continueLearning.lessonId}`,
+      } : null,
       stats: {
-        testsTaken: totalTests,
-        averageBand: averageScore._avg.overallBand || 0,
-        studyHours: user.studyHours || 0,
+        practiceTests: totalTests,
+        studyHours: userWithRelations.studyHours || 0,
+        completedLessons: totalProgress,
+        averageScore: averageScore._avg.overallBand || 0,
       },
-      recentTests: user.tests,
-      studyGoal: user.studyGoals[0] || null,
+      recentTests: userWithRelations.tests.map(test => ({
+        id: test.id,
+        moduleType: test.moduleType,
+        testType: test.testType,
+        completedAt: test.completedAt,
+        score: test.score?.overallBand || null,
+      })),
+      studyGoal: userWithRelations.studyGoals[0] || null,
     });
 
   } catch (error) {
+    if (error.message === "UNAUTHORIZED") {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    if (error.message === "USER_NOT_FOUND") {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
     console.error('Dashboard API Error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
