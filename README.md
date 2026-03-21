@@ -14,44 +14,28 @@ IELTS Booster is a full-stack web application designed to help students achieve 
 
 ---
 
-## Features
+## New Features 
+Exam Library:
+- Filterable and searchable test grid with tab categories
+- Sort by recency, difficulty and duration
+- Custom SortDropdown UI component shared across pages
 
-Authentication System:
-- Full authentication flow with NextAuth.js
-- JWT session management
-- Route protection middleware
-- Automatic redirects (logged in → dashboard, logged out → login)
-- Session persistence and validation
+Pre-Exam Page (`/exam-library/[testId]`):
+- Per-skill selectable sub-parts (Listening sections, Reading passages, Writing tasks, Speaking parts)
+- Full IELTS general test with 4 top-level sections
+- Timed vs Practice mode toggle
+- Live expected duration counter
+- Split into focused components: TestInfoCard, TestPartsList, TestModeSelector, InstructionsCard, ExamCTA
 
-Database Integration:
-- PostgreSQL connected via Supabase
-- Complete Prisma schema with all models
-- User, Test, Score, Progress, StudyGoal models
-- Secure API routes with validation
+Study Materials Page (`/material`):
+- Sidebar filters: category, difficulty level, file format
+- Material cards with real thumbnail images, star ratings, hover overlays
+- Shared SortDropdown for consistent UX across pages
+- Pagination reused from Exam Library
 
-Dashboard Implementation:
-- Professional dashboard UI
-- Welcome banner with user info
-- Continue Learning section with module gradients
-- Quick Actions cards
-- Error handling with retry mechanism
-- Loading states
-- Responsive design (mobile + desktop)
-
-Header Component:
-- Adaptive header (public vs authenticated)
-- Navigation only shows when logged in
-- Desktop dropdown menu for user profile
-- Mobile hamburger menu
-- All icons from constants
-- Fully responsive
-
-Components Architecture:
-- Reusable Header and Footer
-- Dashboard components (WelcomeBanner, ContinueLearning, QuickActions)
-- All navigation and icons centralized in constants.js
-- DRY principle followed throughout
-- Easy to maintain and extend
+TypeScript Migration:
+- Full codebase migrated from JavaScript (.jsx/.js) to TypeScript (.tsx/.ts)
+- Strict typing across all components, API routes, services and shared utilities
 
 Security:
 - Password hashing with bcryptjs (12 rounds)
@@ -66,6 +50,7 @@ Security:
 ![LandingPage](./docs/screenshots/landing-page1.png)
 ![LandingPage](./docs/screenshots/landing-page.png)
 ![DashboardPage](./docs/screenshots/dashboard-page.png)
+
 ##  Tech Stack
 
 ### Frontend
