@@ -20,6 +20,7 @@ import ExamCTA from '@/components/features/pre-exam/ExamCTA';
 import { buildInitialParts, LEVEL_LABEL } from '@/components/features/pre-exam/constants';
 import type { TestMode, TestPart } from '@/components/features/pre-exam/types';
 import { EXAM_LIBRARY_TESTS } from '@/shared/constants';
+import { EXAM_ID_TO_READING_SLUG } from '@/shared/data/exams/reading';
 
 export default function PreExamPage() {
   const { status } = useSession();
@@ -45,7 +46,7 @@ export default function PreExamPage() {
   // Unknown test ID
   if (!test) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center flex flex-col gap-4">
@@ -71,12 +72,19 @@ export default function PreExamPage() {
   };
 
   const handleStartTest = () => {
-    const selected = testParts.filter((p) => p.checked).map((p) => p.id);
-    console.log('Start test', { testId, testMode, selected, totalDuration });
+    if (test.type === 'reading') {
+      const slug = EXAM_ID_TO_READING_SLUG[testId];
+      if (slug) {
+        router.push(`/exam/${slug}/reading`);
+        return;
+      }
+    }
+    // TODO: add routing for listening, writing, speaking when implemented
+    console.warn('Exam type not yet implemented:', test.type);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
 
       <main className="flex-1">

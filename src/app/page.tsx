@@ -60,7 +60,7 @@ export default async function HomePage() {
   const homeData = await getHomeData(session.user.id);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
         <Container>

@@ -1,5 +1,5 @@
 'use client';
-import { signIn } from 'next-auth/react';
+import { signIn, getSession } from 'next-auth/react';
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -37,8 +37,8 @@ export default function LoginForm() {
         return;
       }
 
-      router.push('/');
-      router.refresh();
+      const session = await getSession();
+      router.push(session?.user?.role === 'admin' ? '/admin/dashboard' : '/');
     } catch (error) {
       setError('Something went wrong. Please try again.');
       setLoading(false);

@@ -93,7 +93,7 @@ export default function Footer() {
           {/* Bottom Bar */}
           <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600">
-              © 2024 {BRAND.name}. All rights reserved.
+              © 2026 {BRAND.name}. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm text-gray-600">
               <button className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">

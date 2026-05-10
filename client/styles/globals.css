@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --sidebar: oklch(0.18 0.015 260);
+  --sidebar-foreground: oklch(0.97 0.003 247);
+  --sidebar-accent: oklch(0.28 0.025 260);
+  --sidebar-accent-foreground: oklch(0.99 0 0);
+  --sidebar-border: oklch(0.3 0.02 260);
+  --border: oklch(0.929 0.013 255.508);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+}
+
+.bg-app-canvas { background-color: oklch(0.985 0.012 75); }
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,11 +24,90 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Arial, sans-serif;
   line-height: 1.6;
+  background: linear-gradient(-45deg, #eef4ff, #e4f0fe, #eaf8f6, #f3eeff);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  min-height: 100vh;
 }
+
+/* ── Admin sidebar hover ── */
+.admin-nav-link:hover {
+  background-color: oklch(0.28 0.025 260 / 0.4);
+}
+
+/* ── Animated background ── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Floating orbs ── */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bg-orb-1 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(43, 108, 238, 0.18) 0%, transparent 70%);
+  top: -280px;
+  left: -200px;
+  animation: orbFloat1 22s ease-in-out infinite;
+}
+
+.bg-orb-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%);
+  bottom: -220px;
+  right: -180px;
+  animation: orbFloat2 28s ease-in-out infinite;
+}
+
+.bg-orb-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.10) 0%, transparent 70%);
+  top: 40%;
+  right: 5%;
+  animation: orbFloat1 18s ease-in-out infinite reverse;
+}
+
+.bg-orb-4 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(43, 108, 238, 0.10) 0%, transparent 70%);
+  bottom: 20%;
+  left: 5%;
+  animation: orbFloat2 24s ease-in-out infinite reverse;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33%       { transform: translate(40px, -50px) scale(1.06); }
+  66%       { transform: translate(-30px, 30px) scale(0.94); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33%       { transform: translate(-50px, 30px) scale(1.08); }
+  66%       { transform: translate(30px, -50px) scale(0.93); }
+}
+
+/* ── Existing animations ── */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
   20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {

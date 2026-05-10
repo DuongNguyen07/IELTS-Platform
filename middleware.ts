@@ -8,6 +8,21 @@ export async function middleware(request: NextRequest) {
   });
 
   const { pathname, search } = request.nextUrl;
+
+  // Admin routes — JWT role check (no DB call)
+  if (pathname.startsWith('/admin')) {
+    if (!token) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('callbackUrl', pathname + search);
+      return NextResponse.redirect(loginUrl);
+    }
+    if ((token as { role?: string }).role !== 'admin') {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+    return NextResponse.next();
+  }
+
+  // Protected user routes
   if (
     !token &&
     (
@@ -22,10 +37,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (
-    token &&
-    (pathname === '/login' || pathname === '/signup')
-  ) {
+  if (token && (pathname === '/login' || pathname === '/signup')) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
@@ -34,6 +46,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    '/admin/:path*',
     '/dashboard/:path*',
     '/practice/:path*',
     '/progress/:path*',

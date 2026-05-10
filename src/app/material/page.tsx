@@ -73,7 +73,7 @@ export default function MaterialPage() {
   if (status === 'unauthenticated') return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
 
       <main className="flex-1">

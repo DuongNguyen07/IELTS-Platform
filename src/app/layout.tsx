@@ -12,6 +12,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <div className="bg-orb bg-orb-1" aria-hidden="true" />
+        <div className="bg-orb bg-orb-2" aria-hidden="true" />
+        <div className="bg-orb bg-orb-3" aria-hidden="true" />
+        <div className="bg-orb bg-orb-4" aria-hidden="true" />
         <ClientProviders>
           {children}
         </ClientProviders>
