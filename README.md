@@ -10,7 +10,6 @@ IELTS Booster is a full-stack web application designed to help students achieve 
 - **Real-time Feedback**: Instant performance insights and improvement suggestions
 - **Progress Tracking**: Detailed analytics and score history
 - **Study Material**: List of necessary materials for IELTS
-- **Individual Project** | Full-stack Project | 2025-2026
 
 ---
 
@@ -20,14 +19,14 @@ Exam Library:
 - Sort by recency, difficulty and duration
 - Custom SortDropdown UI component shared across pages
 
-Pre-Exam Page (`/exam-library/[testId]`):
+Pre-Exam Page:
 - Per-skill selectable sub-parts (Listening sections, Reading passages, Writing tasks, Speaking parts)
 - Full IELTS general test with 4 top-level sections
 - Timed vs Practice mode toggle
 - Live expected duration counter
 - Split into focused components: TestInfoCard, TestPartsList, TestModeSelector, InstructionsCard, ExamCTA
 
-Study Materials Page (`/material`):
+Study Materials Page:
 - Sidebar filters: category, difficulty level, file format
 - Material cards with real thumbnail images, star ratings, hover overlays
 - Shared SortDropdown for consistent UX across pages
@@ -44,14 +43,6 @@ Security:
 - SQL injection prevention (Prisma ORM)
 - Protected API routes
 - Environment variables secured
-
-![LoginPage](./docs/screenshots/login-page.png)
-![SignUpPage](./docs/screenshots/sign-up-page.png)
-![LandingPage](./docs/screenshots/landing-page1.png)
-![LandingPage](./docs/screenshots/landing-page.png)
-![DashboardPage](./docs/screenshots/dashboard-page.png)
-
-##  Tech Stack
 
 ### Frontend
 - **Framework**: Next.js 15 (App Router)
