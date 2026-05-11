@@ -1,0 +1,99 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/app/*": [
+        "./src/app/*"
+      ],
+      "@/client/*": [
+        "./client/*"
+      ],
+      "@/components": [
+        "./client/components"
+      ],
+      "@/components/*": [
+        "./client/components/*"
+      ],
+      "@/hooks/*": [
+        "./client/hooks/*"
+      ],
+      "@/styles/*": [
+        "./client/styles/*"
+      ],
+      "@/styles/globals.css": [
+        "./client/styles/globals.css"
+      ],
+      "@/utils/client/*": [
+        "./client/utils/*"
+      ],
+      "@/server": [
+        "./server"
+      ],
+      "@/server/*": [
+        "./server/*"
+      ],
+      "@/api/*": [
+        "./server/api/*"
+      ],
+      "@/services/*": [
+        "./server/services/*"
+      ],
+      "@/middleware/*": [
+        "./server/middleware/*"
+      ],
+      "@/lib/*": [
+        "./server/lib/*"
+      ],
+      "@/config/*": [
+        "./server/config/*"
+      ],
+      "@/shared": [
+        "./shared"
+      ],
+      "@/shared/*": [
+        "./shared/*"
+      ],
+      "@/constants": [
+        "./shared/constants"
+      ],
+      "@/validation": [
+        "./shared/validation"
+      ],
+      "@/utils/shared/*": [
+        "./shared/utils/*"
+      ]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

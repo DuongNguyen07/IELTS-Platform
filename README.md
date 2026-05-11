@@ -1,8 +1,8 @@
-# 📚 IELTS Booster - AI-Powered IELTS Practice Platform
+#  IELTS Booster - AI-Powered IELTS Practice Platform
 
 An intelligent IELTS preparation platform featuring AI-powered scoring, real-time feedback, and comprehensive practice modules for all four IELTS sections.
 
-## 🎯 Project Overview
+## Project Overview
 
 IELTS Booster is a full-stack web application designed to help students achieve their target IELTS band scores through:
 - **AI-Powered Scoring**: Automated essay and speaking evaluation
@@ -14,58 +14,44 @@ IELTS Booster is a full-stack web application designed to help students achieve 
 
 ---
 
-## ✨ Features
+## New Features 
+Exam Library:
+- Filterable and searchable test grid with tab categories
+- Sort by recency, difficulty and duration
+- Custom SortDropdown UI component shared across pages
 
-### ✅ Sprint 2 - Complete Authentication System + Database Integration
--  User signup with validation (8+ chars, uppercase, number, special char)
--  User login with NextAuth.js JWT sessions
--  Password hashing with bcryptjs (12 rounds)
--  Session management with secure httpOnly cookies
--  Route protection via middleware
-Pages & UI:
-- Landing page (Hero, Features, CTA, Footer)
-- Login page with social auth placeholders
-- Signup page with real-time password validation
-- Dashboard with user session and stats
-- Responsive design (mobile + desktop)
+Pre-Exam Page (`/exam-library/[testId]`):
+- Per-skill selectable sub-parts (Listening sections, Reading passages, Writing tasks, Speaking parts)
+- Full IELTS general test with 4 top-level sections
+- Timed vs Practice mode toggle
+- Live expected duration counter
+- Split into focused components: TestInfoCard, TestPartsList, TestModeSelector, InstructionsCard, ExamCTA
+
+Study Materials Page (`/material`):
+- Sidebar filters: category, difficulty level, file format
+- Material cards with real thumbnail images, star ratings, hover overlays
+- Shared SortDropdown for consistent UX across pages
+- Pagination reused from Exam Library
+
+TypeScript Migration:
+- Full codebase migrated from JavaScript (.jsx/.js) to TypeScript (.tsx/.ts)
+- Strict typing across all components, API routes, services and shared utilities
+
+Security:
+- Password hashing with bcryptjs (12 rounds)
+- Input sanitization
+- Rate limiting
+- SQL injection prevention (Prisma ORM)
+- Protected API routes
+- Environment variables secured
+
 ![LoginPage](./docs/screenshots/login-page.png)
 ![SignUpPage](./docs/screenshots/sign-up-page.png)
 ![LandingPage](./docs/screenshots/landing-page1.png)
 ![LandingPage](./docs/screenshots/landing-page.png)
+![DashboardPage](./docs/screenshots/dashboard-page.png)
 
-Database Integration:
-- PostgreSQL connection via Supabase
-- Prisma ORM with complete schema
-- User model with profile tracking
-- Test, Score, Progress, StudyGoal models
-- NextAuth session storage in database
-
-Components Created:
-- Layout: Header, Footer, Container
-- Sections: Hero, Features, CTA
-- UI: Button, Input, PasswordInput, Alert, Card
-- Auth: LoginForm, SignupForm, SocialLogin
-- Providers: ClientProviders (SessionProvider wrapper)
-
-Security Implementations:
-- Input sanitization (XSS prevention)
-- Password validation (client + server)
-- Rate limiting on API routes
-- SQL injection prevention (Prisma ORM)
-- Environment variables for secrets
-- Security headers in responses
-- Protected API routes with session checks
-
-### 🚧 In Progress
-- 📊 Dashboard with performance analytics
-- ✍️ Writing module with AI scoring
-- 📖 Reading comprehension tests
-- 🎧 Listening practice with audio
-- 🗣️ Speaking module with Whisper AI transcription
-
----
-
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **Framework**: Next.js 15 (App Router)
