@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree -L 3 -I 'node_modules|.next' /d/Projects/ielts-platform 2>/dev/null || find /d/Projects/ielts-platform -maxdepth 3 -type d -not -path \"*/node_modules/*\" -not -path \"*/.next/*\" | head -40)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(ls D:/Projects/ielts-platform/postcss.config* && ls D:/Projects/ielts-platform/tailwind.config*)",
+      "Bash(npx prisma:*)",
+      "Bash(powershell -Command \"Test-NetConnection -ComputerName 'aws-1-ap-southeast-1.pooler.supabase.com' -Port 5432 -InformationLevel Detailed 2>&1\")",
+      "Bash(powershell -Command \"Resolve-DnsName 'db.bpdqwxakadkdbdvkzsii.supabase.co' -ErrorAction SilentlyContinue; Resolve-DnsName 'aws-1-ap-southeast-1.pooler.supabase.com' -ErrorAction SilentlyContinue\" 2>&1)",
+      "Bash(powershell -Command \"Test-NetConnection -ComputerName 'aws-1-ap-southeast-1.pooler.supabase.com' -Port 6543 -WarningAction SilentlyContinue | Select-Object TcpTestSucceeded, RemoteAddress, RemotePort\" 2>&1)",
+      "Bash(node -e \"const net = require\\(''net''\\); const s = net.createConnection\\(6543, ''aws-1-ap-southeast-1.pooler.supabase.com''\\); s.on\\(''connect'', \\(\\) => { console.log\\(''PORT 6543: REACHABLE''\\); s.destroy\\(\\); }\\); s.on\\(''error'', e => console.log\\(''PORT 6543: BLOCKED -'', e.message\\)\\); setTimeout\\(\\(\\) => { s.destroy\\(\\); }, 5000\\);\")",
+      "Bash(node -e \":*)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
+    ]
+  }
+}

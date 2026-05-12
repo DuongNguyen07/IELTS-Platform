@@ -5,7 +5,7 @@ import prisma from '@/server/lib/prisma';
 
 export async function GET(
   _req: Request,
-  { params }: { params: { testId: string } }
+  { params }: { params: Promise<{ testId: string }> }
 ) {
   // Must be logged in to access exam content
   const session = await getServerSession(authOptions);
@@ -13,8 +13,9 @@ export async function GET(
     return NextResponse.json({ error: 'Unauthorised' }, { status: 401 });
   }
 
+  const { testId } = await params;
   const exam = await prisma.examContent.findUnique({
-    where: { slug: params.testId },
+    where: { slug: testId },
     select: {
       slug: true,
       title: true,

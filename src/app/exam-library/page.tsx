@@ -12,41 +12,46 @@ import ExamFilterBar from '@/components/features/exam-library/ExamFilterBar';
 import TestGrid from '@/components/features/exam-library/TestGrid';
 import Pagination from '@/components/features/exam-library/Pagination';
 
-import {
-  EXAM_LIBRARY_TESTS,
-  DIFFICULTY_ORDER,
-  TESTS_PER_PAGE,
-} from '@/shared/constants';
+import { DIFFICULTY_ORDER, TESTS_PER_PAGE } from '@/shared/constants';
+import type { ExamTest } from '@/shared/constants';
 
 export default function ExamLibraryPage() {
   const { status } = useSession();
   const router = useRouter();
 
+  const [exams, setExams] = useState<ExamTest[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('recent');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Auth guard - redirect if unauthenticated
+  // Auth guard
   useEffect(() => {
     if (status === 'unauthenticated') router.push('/login');
   }, [status, router]);
 
-  const filteredTests = useMemo(() => {
-    let result = [...EXAM_LIBRARY_TESTS];
+  // Fetch published exams from DB
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+    fetch('/api/exams')
+      .then((r) => r.json())
+      .then((data: ExamTest[]) => setExams(data))
+      .finally(() => setLoading(false));
+  }, [status]);
 
-    // Tab filter
+  const filteredTests = useMemo(() => {
+    let result = [...exams];
+
     if (activeTab !== 'all') {
       result = result.filter((t) => t.type === activeTab);
     }
 
-    // Search filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       result = result.filter((t) => t.title.toLowerCase().includes(q));
     }
 
-    // Sort
     if (sortBy === 'difficulty_high') {
       result.sort((a, b) => DIFFICULTY_ORDER[b.difficulty] - DIFFICULTY_ORDER[a.difficulty]);
     } else if (sortBy === 'difficulty_low') {
@@ -56,7 +61,7 @@ export default function ExamLibraryPage() {
     }
 
     return result;
-  }, [activeTab, searchQuery, sortBy]);
+  }, [exams, activeTab, searchQuery, sortBy]);
 
   const totalPages = Math.ceil(filteredTests.length / TESTS_PER_PAGE);
   const pagedTests = filteredTests.slice(
@@ -64,7 +69,7 @@ export default function ExamLibraryPage() {
     currentPage * TESTS_PER_PAGE,
   );
 
-  if (status === 'loading') return <LoadingState message="Loading exam library..." />;
+  if (status === 'loading' || loading) return <LoadingState message="Loading exam library..." />;
   if (status === 'unauthenticated') return null;
 
   return (
@@ -75,7 +80,6 @@ export default function ExamLibraryPage() {
         <Container>
           <div className="py-10 flex flex-col gap-8">
 
-            {/* Page Header */}
             <div className="flex flex-col gap-2">
               <h1 className="text-gray-900 text-4xl font-black tracking-tight">
                 Exam Test Library
@@ -85,34 +89,21 @@ export default function ExamLibraryPage() {
               </p>
             </div>
 
-            {/* Filters */}
             <ExamFilterBar
               activeTab={activeTab}
-              onTabChange={(tab: string) => {
-                setActiveTab(tab);
-                setCurrentPage(1);
-              }}
+              onTabChange={(tab: string) => { setActiveTab(tab); setCurrentPage(1); }}
               searchQuery={searchQuery}
-              onSearchChange={(q: string) => {
-                setSearchQuery(q);
-                setCurrentPage(1);
-              }}
+              onSearchChange={(q: string) => { setSearchQuery(q); setCurrentPage(1); }}
               sortBy={sortBy}
-              onSortChange={(sort: string) => {
-                setSortBy(sort);
-                setCurrentPage(1);
-              }}
+              onSortChange={(sort: string) => { setSortBy(sort); setCurrentPage(1); }}
             />
 
-            {/* Results count */}
             <p className="text-sm text-gray-400 -mb-2">
               {filteredTests.length} test{filteredTests.length !== 1 ? 's' : ''} found
             </p>
 
-            {/* Grid */}
             <TestGrid tests={pagedTests} />
 
-            {/* Pagination */}
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

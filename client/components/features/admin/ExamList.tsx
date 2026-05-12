@@ -126,6 +126,7 @@ export default function ExamList({ initialExams }: Props) {
                   <th className="px-5 py-3 text-left font-semibold">Skill</th>
                   <th className="px-5 py-3 text-left font-semibold">Difficulty</th>
                   <th className="px-5 py-3 text-left font-semibold">Questions</th>
+                  <th className="px-5 py-3 text-left font-semibold">Duration</th>
                   <th className="px-5 py-3 text-left font-semibold">Status</th>
                   <th className="px-5 py-3 text-left font-semibold">Updated</th>
                   <th className="px-5 py-3 text-left font-semibold">Actions</th>
@@ -142,7 +143,8 @@ export default function ExamList({ initialExams }: Props) {
                       </td>
                       <td className="px-5 py-3.5 capitalize text-gray-700">{exam.skill}</td>
                       <td className="px-5 py-3.5 capitalize text-gray-700">{exam.difficulty}</td>
-                      <td className="px-5 py-3.5 text-gray-700">{exam.totalQuestions} Q · {exam.durationMins}min</td>
+                      <td className="px-5 py-3.5 text-gray-700">{exam.totalQuestions} questions</td>
+                      <td className="px-5 py-3.5 text-gray-700">{exam.durationMins} mins</td>
                       <td className="px-5 py-3.5">
                         <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${STATUS_PILL[status]}`}>{status}</span>
                       </td>

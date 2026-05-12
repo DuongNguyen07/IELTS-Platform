@@ -305,29 +305,11 @@ export type ExamType = 'listening' | 'reading' | 'writing' | 'speaking' | 'gener
 export type Difficulty = 'easy' | 'intermediate' | 'advanced';
 
 export interface ExamTest {
-  id: number;
+  id: string;            // slug, e.g. 'rt-001' — used in URLs
   title: string;
   type: ExamType;
   durationMins: number;
   difficulty: Difficulty;
+  totalQuestions: number;
+  createdAt: string;
 }
-
-// EXAM LIBRARY — Mock test data
-export const EXAM_LIBRARY_TESTS: ExamTest[] = [
-  { id: 1,  title: 'Academic Practice Test 14',    type: 'listening', durationMins: 60, difficulty: 'intermediate' },
-  { id: 2,  title: 'Reading Intensive 03',          type: 'reading',   durationMins: 60, difficulty: 'advanced'     },
-  { id: 3,  title: 'Writing Task 1 & 2 Pack',       type: 'writing',   durationMins: 60, difficulty: 'easy'         },
-  { id: 4,  title: 'Speaking Simulation A',         type: 'speaking',  durationMins: 15, difficulty: 'advanced'     },
-  { id: 5,  title: 'General Training Test 08',      type: 'general',   durationMins: 165, difficulty: 'intermediate' },
-  { id: 6,  title: 'Listening Mastery Set 1',       type: 'listening', durationMins: 30, difficulty: 'advanced'     },
-  { id: 7,  title: 'Academic Reading Set 07',       type: 'reading',   durationMins: 60, difficulty: 'intermediate' },
-  { id: 8,  title: 'Writing Band 7+ Practice',      type: 'writing',   durationMins: 60, difficulty: 'advanced'     },
-  { id: 9,  title: 'Speaking Part 2 Drill',         type: 'speaking',  durationMins: 15, difficulty: 'intermediate' },
-  { id: 10, title: 'Listening Foundation Set',      type: 'listening', durationMins: 30, difficulty: 'easy'         },
-  { id: 11, title: 'General Reading Test 03',       type: 'general',   durationMins: 165, difficulty: 'easy'         },
-  { id: 12, title: 'Writing Task 1 — Graph Focus',  type: 'writing',   durationMins: 20, difficulty: 'easy'         },
-  { id: 13, title: 'Academic Practice Test 09',     type: 'listening', durationMins: 60, difficulty: 'advanced'     },
-  { id: 14, title: 'Reading Speed Builder',         type: 'reading',   durationMins: 45, difficulty: 'easy'         },
-  { id: 15, title: 'Speaking Full Mock B',          type: 'speaking',  durationMins: 15, difficulty: 'advanced'     },
-  { id: 16, title: 'General Training Test 12',      type: 'general',   durationMins: 165, difficulty: 'advanced'     },
-];

@@ -1,18 +1,21 @@
-//Question types
+// Question types
 export type QuestionType =
   | 'multiple-choice'
+  | 'multiple-choice-many'
   | 'true-false-not-given'
   | 'yes-no-not-given'
   | 'matching-headings'
   | 'matching-features-ending'
+  | 'matching-information'
   | 'diagram-label-completion'
   | 'sentence-completion'
-  | 'short-answer';
+  | 'gap-filling'
+  | 'short-answer'
+  | 'other';
 
-//Passage 
+// Passage
 
 export interface PassageParagraph {
-  // 'A', 'B', 'C',… — set only for matching-headings questions
   label?: string;
   heading?: string;
   text: string;
@@ -24,12 +27,23 @@ export interface ReadingPassage {
   paragraphs: PassageParagraph[];
 }
 
+// Question interfaces
+
 export interface MultipleChoiceQuestion {
   type: 'multiple-choice';
   number: number;
   text: string;
   options: { letter: string; text: string }[];
   answer: string;
+}
+
+export interface MultipleChoiceManyQuestion {
+  type: 'multiple-choice-many';
+  number: number;
+  text: string;
+  options: { letter: string; text: string }[];
+  chooseCount: number;
+  answers: string[];
 }
 
 export interface TrueFalseNGQuestion {
@@ -49,7 +63,6 @@ export interface YesNoNGQuestion {
 export interface MatchingHeadingsQuestion {
   type: 'matching-headings';
   number: number;
-  /** e.g. 'A', 'B', 'C' */
   paragraphLabel: string;
   answer: string;
 }
@@ -57,10 +70,15 @@ export interface MatchingHeadingsQuestion {
 export interface MatchingFeaturesEndingQuestion {
   type: 'matching-features-ending';
   number: number;
-  /** The sentence beginning or feature to be matched */
   text: string;
   answer: string;
-  // Options live at the group level (MatchingFeaturesEndingGroup.options)
+}
+
+export interface MatchingInformationQuestion {
+  type: 'matching-information';
+  number: number;
+  text: string;
+  answer: string;
 }
 
 export interface DiagramLabelCompletionQuestion {
@@ -74,7 +92,15 @@ export interface SentenceCompletionQuestion {
   type: 'sentence-completion';
   number: number;
   beforeBlank: string;
-  // Text that appears after the blank (optional) 
+  afterBlank?: string;
+  answer: string;
+  wordLimit?: number;
+}
+
+export interface GapFillingQuestion {
+  type: 'gap-filling';
+  number: number;
+  beforeBlank?: string;
   afterBlank?: string;
   answer: string;
   wordLimit?: number;
@@ -88,17 +114,28 @@ export interface ShortAnswerQuestion {
   wordLimit?: number;
 }
 
+export interface OtherQuestion {
+  type: 'other';
+  number: number;
+  text: string;
+  answer: string;
+}
+
 export type Question =
   | MultipleChoiceQuestion
+  | MultipleChoiceManyQuestion
   | TrueFalseNGQuestion
   | YesNoNGQuestion
   | MatchingHeadingsQuestion
-  | SentenceCompletionQuestion
   | MatchingFeaturesEndingQuestion
+  | MatchingInformationQuestion
   | DiagramLabelCompletionQuestion
-  | ShortAnswerQuestion;
+  | SentenceCompletionQuestion
+  | GapFillingQuestion
+  | ShortAnswerQuestion
+  | OtherQuestion;
 
-// ── Question Groups ───────────────────────────────────────────────────────────
+// Question Groups
 
 interface BaseGroup {
   instruction: string;
@@ -106,48 +143,55 @@ interface BaseGroup {
 }
 
 export interface StandardGroup extends BaseGroup {
-  type: 'multiple-choice' | 'true-false-not-given' | 'yes-no-not-given' | 'sentence-completion' | 'short-answer' | 'diagram-label-completion';
+  type: 'multiple-choice' | 'multiple-choice-many' | 'true-false-not-given' | 'yes-no-not-given' | 'sentence-completion' | 'short-answer' | 'other';
   questions: Question[];
 }
 
-/** Matching headings — heading options live at the group level (includes distractors) */
 export interface MatchingHeadingsGroup extends BaseGroup {
   type: 'matching-headings';
   headingOptions: { label: string; text: string }[];
   questions: MatchingHeadingsQuestion[];
 }
 
-/** Matching features / sentence endings — shared options list at group level */
 export interface MatchingFeaturesEndingGroup extends BaseGroup {
   type: 'matching-features-ending';
-  /** Shared list of endings / features to match against (may include distractors) */
   options: { letter: string; text: string }[];
   questions: MatchingFeaturesEndingQuestion[];
 }
 
-/** Diagram label completion — optional diagram context at group level */
+export interface MatchingInformationGroup extends BaseGroup {
+  type: 'matching-information';
+  paragraphLabels: string[];
+  questions: MatchingInformationQuestion[];
+}
+
 export interface DiagramLabelCompletionGroup extends BaseGroup {
   type: 'diagram-label-completion';
-  /** Text description of the diagram (alt text / context) */
   diagramDescription?: string;
-  /** URL to the diagram image (optional) */
   diagramImageUrl?: string;
   questions: DiagramLabelCompletionQuestion[];
+}
+
+export interface GapFillingGroup extends BaseGroup {
+  type: 'gap-filling';
+  contextText?: string;
+  questions: GapFillingQuestion[];
 }
 
 export type QuestionGroup =
   | StandardGroup
   | MatchingHeadingsGroup
   | MatchingFeaturesEndingGroup
-  | DiagramLabelCompletionGroup;
+  | MatchingInformationGroup
+  | DiagramLabelCompletionGroup
+  | GapFillingGroup;
 
-// ── Part & Exam ───────────────────────────────────────────────────────────────
+// Parts and Exam
 
 export interface ReadingPart {
   partNumber: 1 | 2 | 3;
   passage: ReadingPassage;
   questionGroups: QuestionGroup[];
-  /** Absolute question numbers for this part, e.g. { from: 1, to: 13 } */
   questionRange: { from: number; to: number };
 }
 

@@ -1,0 +1,435 @@
+{
+  "title": "IELTS Academic Reading Test 2",
+  "description": "A full 40-question academic reading exam covering urban farming, solar energy, and animal migration.",
+  "durationMins": 60,
+  "totalQuestions": 40,
+  "parts": [
+    {
+      "partNumber": 1,
+      "questionRange": { "from": 1, "to": 13 },
+      "passage": {
+        "title": "The Rise of Urban Farming",
+        "subtitle": "How cities around the world are transforming rooftops and vacant lots into productive green spaces",
+        "paragraphs": [
+          {
+            "text": "Urban farming — the practice of cultivating, processing, and distributing food in or around urban areas — has gained remarkable momentum over the past two decades. Once considered a fringe movement, it is now embraced by city planners, environmental advocates, and entrepreneurs alike. From rooftop gardens in New York to vertical farms in Singapore, urban agriculture is reshaping the way metropolitan populations think about food production."
+          },
+          {
+            "text": "The motivations behind urban farming are as diverse as its practitioners. Food security is a primary driver, particularly in cities where access to fresh produce is limited by geography or income. Community gardens in low-income neighbourhoods have been shown to improve nutrition outcomes, reduce food expenditure, and foster social cohesion among residents who might otherwise have little interaction with one another."
+          },
+          {
+            "text": "Environmental benefits also play a significant role. Transporting food across continents contributes substantially to greenhouse gas emissions, and growing produce locally can dramatically cut these so-called food miles. Moreover, urban green spaces act as carbon sinks, absorb stormwater, and reduce the heat-island effect that makes cities significantly warmer than surrounding rural areas."
+          },
+          {
+            "text": "Despite these advantages, urban farming faces considerable challenges. Land in cities is expensive and often contaminated with heavy metals or other pollutants from decades of industrial use. Securing funding, navigating zoning regulations, and attracting consistent volunteer labour are ongoing struggles for many community-led projects. Critics also point out that urban farms typically cannot match the output of conventional industrial agriculture and therefore cannot serve as a complete substitute."
+          },
+          {
+            "text": "Technology is beginning to address some of these limitations. Hydroponic and aeroponic systems allow crops to be grown without soil, using up to 95% less water than traditional farming. LED lighting has made indoor vertical farms viable even in basements or windowless warehouses. Sensors and automation reduce the need for manual labour, making it possible to manage large growing areas with minimal staff."
+          },
+          {
+            "text": "Governments in several countries have begun to formalise their support for urban agriculture. In France, a law passed in 2018 requires new commercial rooftops above a certain size to be either greened or fitted with solar panels, directly encouraging urban food production. Japan's Ministry of Agriculture actively subsidises rooftop farms in Tokyo, viewing them as part of a broader national food resilience strategy."
+          },
+          {
+            "text": "The commercial viability of urban farming remains debated. Some high-profile ventures have collapsed under the weight of high operational costs and thin profit margins. Others, however, have found success by targeting premium markets, partnering with local restaurants, or integrating farming with leisure and education. The lesson, many practitioners argue, is that urban farming must be adapted to its local context rather than applied as a universal template."
+          }
+        ]
+      },
+      "questionGroups": [
+        {
+          "type": "true-false-not-given",
+          "instruction": "Do the following statements agree with the information given in the passage? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, or NOT GIVEN if there is no information on this.",
+          "questionRange": { "from": 1, "to": 7 },
+          "questions": [
+            {
+              "type": "true-false-not-given",
+              "number": 1,
+              "text": "Urban farming has only recently begun to attract attention from city planners.",
+              "answer": "FALSE"
+            },
+            {
+              "type": "true-false-not-given",
+              "number": 2,
+              "text": "Community gardens in low-income areas can help reduce residents' spending on food.",
+              "answer": "TRUE"
+            },
+            {
+              "type": "true-false-not-given",
+              "number": 3,
+              "text": "Growing food locally always eliminates greenhouse gas emissions entirely.",
+              "answer": "FALSE"
+            },
+            {
+              "type": "true-false-not-given",
+              "number": 4,
+              "text": "Urban land is sometimes polluted from previous industrial activities.",
+              "answer": "TRUE"
+            },
+            {
+              "type": "true-false-not-given",
+              "number": 5,
+              "text": "Hydroponic systems were originally developed for use in space stations.",
+              "answer": "NOT GIVEN"
+            },
+            {
+              "type": "true-false-not-given",
+              "number": 6,
+              "text": "French law now requires certain commercial rooftops to include green space or solar panels.",
+              "answer": "TRUE"
+            },
+            {
+              "type": "true-false-not-given",
+              "number": 7,
+              "text": "All urban farming businesses that have attempted to scale up have ultimately failed.",
+              "answer": "FALSE"
+            }
+          ]
+        },
+        {
+          "type": "sentence-completion",
+          "instruction": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+          "questionRange": { "from": 8, "to": 13 },
+          "questions": [
+            {
+              "type": "sentence-completion",
+              "number": 8,
+              "beforeBlank": "Urban green spaces help reduce the",
+              "afterBlank": "which makes cities warmer than rural areas.",
+              "answer": "heat-island effect",
+              "wordLimit": 2
+            },
+            {
+              "type": "sentence-completion",
+              "number": 9,
+              "beforeBlank": "Aeroponic systems can grow crops using up to 95% less",
+              "afterBlank": "than conventional farming methods.",
+              "answer": "water",
+              "wordLimit": 2
+            },
+            {
+              "type": "sentence-completion",
+              "number": 10,
+              "beforeBlank": "The use of",
+              "afterBlank": "lighting has made indoor vertical farms practical in windowless spaces.",
+              "answer": "LED",
+              "wordLimit": 2
+            },
+            {
+              "type": "sentence-completion",
+              "number": 11,
+              "beforeBlank": "Japan's government actively",
+              "afterBlank": "rooftop farms in Tokyo as part of its food resilience strategy.",
+              "answer": "subsidises",
+              "wordLimit": 2
+            },
+            {
+              "type": "sentence-completion",
+              "number": 12,
+              "beforeBlank": "Some urban farms have succeeded by targeting",
+              "afterBlank": "markets or partnering with local restaurants.",
+              "answer": "premium",
+              "wordLimit": 2
+            },
+            {
+              "type": "sentence-completion",
+              "number": 13,
+              "beforeBlank": "Critics argue that urban farms cannot serve as a complete",
+              "afterBlank": "for conventional industrial agriculture.",
+              "answer": "substitute",
+              "wordLimit": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "partNumber": 2,
+      "questionRange": { "from": 14, "to": 26 },
+      "passage": {
+        "title": "Solar Energy: Beyond the Panel",
+        "subtitle": "Innovations in photovoltaic technology are opening new frontiers for renewable power generation",
+        "paragraphs": [
+          {
+            "text": "For most of its commercial history, solar energy has been synonymous with the flat, blue-black photovoltaic panels mounted on rooftops or arranged in open-field arrays. This image, however, is rapidly becoming outdated. A new generation of solar technologies is embedding electricity generation into buildings, vehicles, clothing, and even roads, promising to turn virtually any surface into a potential power source."
+          },
+          {
+            "text": "Building-integrated photovoltaics (BIPV) represent one of the most commercially advanced of these innovations. Unlike conventional panels, which are bolted onto existing structures, BIPV products are designed as structural components — solar roof tiles, transparent window glazing, or facades that replace conventional cladding. Tesla's Solar Roof, launched in 2016, brought BIPV to mainstream consumer attention, though its high installation cost has limited widespread adoption."
+          },
+          {
+            "text": "Floating solar farms — panels installed on reservoirs, lakes, and other bodies of water — offer a different set of advantages. They avoid competition with agriculture or urban development for land use, while the water beneath the panels keeps them cooler, improving efficiency by as much as 10 to 15 percent. Several Asian countries, including China, Japan, and South Korea, have invested heavily in floating solar infrastructure, with China now hosting the world's largest such installation."
+          },
+          {
+            "text": "Perovskite solar cells have attracted enormous scientific interest in recent years. These materials, named after the mineral with the same crystal structure, can be manufactured at low cost using relatively simple printing processes. In laboratory conditions, perovskite cells have achieved efficiency rates comparable to conventional silicon cells. The main obstacle to commercialisation is durability: perovskite cells currently degrade significantly faster than silicon alternatives when exposed to moisture and heat."
+          },
+          {
+            "text": "Solar-powered transportation is another frontier. Commercial solar-assisted aircraft, boats, and experimental road vehicles have all demonstrated the technology's viability for mobility applications. More practically, solar charging infrastructure is spreading rapidly: parking canopies fitted with photovoltaic panels can generate electricity while simultaneously providing shade for vehicles, offering a dual-use solution that is particularly attractive in hot, sunny climates."
+          },
+          {
+            "text": "Despite the excitement surrounding these developments, significant barriers remain. The intermittency of solar power — the fact that panels produce electricity only when sunlight is available — continues to pose challenges for grid stability. Battery storage technology has improved dramatically but remains expensive. Grid integration, smart energy management, and demand-side flexibility are all necessary complements to expanded solar capacity if the technology is to fulfil its potential as a primary energy source."
+          }
+        ]
+      },
+      "questionGroups": [
+        {
+          "type": "multiple-choice",
+          "instruction": "Choose the correct letter, A, B, C or D.",
+          "questionRange": { "from": 14, "to": 20 },
+          "questions": [
+            {
+              "type": "multiple-choice",
+              "number": 14,
+              "text": "What does the writer suggest about the traditional image of solar energy?",
+              "options": [
+                { "letter": "A", "text": "It accurately reflects the current state of the industry." },
+                { "letter": "B", "text": "It is becoming less representative of solar technology as a whole." },
+                { "letter": "C", "text": "It has discouraged investment in renewable energy." },
+                { "letter": "D", "text": "It was never an accurate description of photovoltaic technology." }
+              ],
+              "answer": "B"
+            },
+            {
+              "type": "multiple-choice",
+              "number": 15,
+              "text": "What is the main difference between BIPV products and conventional solar panels?",
+              "options": [
+                { "letter": "A", "text": "BIPV products generate more electricity per square metre." },
+                { "letter": "B", "text": "BIPV products are integrated as part of the building's structure." },
+                { "letter": "C", "text": "BIPV products are significantly cheaper to install." },
+                { "letter": "D", "text": "BIPV products can function without direct sunlight." }
+              ],
+              "answer": "B"
+            },
+            {
+              "type": "multiple-choice",
+              "number": 16,
+              "text": "What advantage of floating solar farms is mentioned in the passage?",
+              "options": [
+                { "letter": "A", "text": "They require less maintenance than land-based arrays." },
+                { "letter": "B", "text": "They can be relocated easily if conditions change." },
+                { "letter": "C", "text": "They do not compete with land needed for farming or housing." },
+                { "letter": "D", "text": "They produce electricity even during periods of cloud cover." }
+              ],
+              "answer": "C"
+            },
+            {
+              "type": "multiple-choice",
+              "number": 17,
+              "text": "What is the primary problem currently preventing perovskite cells from being sold commercially?",
+              "options": [
+                { "letter": "A", "text": "Their efficiency is significantly lower than silicon cells." },
+                { "letter": "B", "text": "They are too expensive to manufacture at scale." },
+                { "letter": "C", "text": "They break down more quickly under real-world conditions." },
+                { "letter": "D", "text": "They require rare materials that are difficult to source." }
+              ],
+              "answer": "C"
+            },
+            {
+              "type": "multiple-choice",
+              "number": 18,
+              "text": "Why are solar parking canopies described as particularly useful in hot climates?",
+              "options": [
+                { "letter": "A", "text": "They generate more power and provide shelter at the same time." },
+                { "letter": "B", "text": "They reduce the need for conventional air conditioning systems." },
+                { "letter": "C", "text": "They are cheaper to build than traditional carpark structures." },
+                { "letter": "D", "text": "They can power electric vehicles directly without a grid connection." }
+              ],
+              "answer": "A"
+            },
+            {
+              "type": "multiple-choice",
+              "number": 19,
+              "text": "According to the passage, what is the main ongoing challenge for solar power?",
+              "options": [
+                { "letter": "A", "text": "The high cost of manufacturing photovoltaic panels." },
+                { "letter": "B", "text": "Public resistance to solar infrastructure in urban areas." },
+                { "letter": "C", "text": "The fact that panels only produce power when sunlight is available." },
+                { "letter": "D", "text": "A shortage of engineers with the skills to install solar systems." }
+              ],
+              "answer": "C"
+            },
+            {
+              "type": "multiple-choice",
+              "number": 20,
+              "text": "What is the writer's overall attitude towards the future of solar energy?",
+              "options": [
+                { "letter": "A", "text": "Highly optimistic, with no significant concerns." },
+                { "letter": "B", "text": "Cautiously positive, acknowledging both progress and barriers." },
+                { "letter": "C", "text": "Largely sceptical about the technology's commercial viability." },
+                { "letter": "D", "text": "Neutral and purely descriptive, without expressing a view." }
+              ],
+              "answer": "B"
+            }
+          ]
+        },
+        {
+          "type": "short-answer",
+          "instruction": "Answer the questions below. Choose NO MORE THAN THREE WORDS from the passage for each answer.",
+          "questionRange": { "from": 21, "to": 26 },
+          "questions": [
+            {
+              "type": "short-answer",
+              "number": 21,
+              "text": "In what year did Tesla introduce its Solar Roof product to consumers?",
+              "answer": "2016",
+              "wordLimit": 3
+            },
+            {
+              "type": "short-answer",
+              "number": 22,
+              "text": "By how much can water beneath floating panels improve their efficiency?",
+              "answer": "10 to 15 percent",
+              "wordLimit": 3
+            },
+            {
+              "type": "short-answer",
+              "number": 23,
+              "text": "What type of manufacturing process can be used to produce perovskite cells at low cost?",
+              "answer": "printing processes",
+              "wordLimit": 3
+            },
+            {
+              "type": "short-answer",
+              "number": 24,
+              "text": "Which country currently hosts the world's largest floating solar installation?",
+              "answer": "China",
+              "wordLimit": 3
+            },
+            {
+              "type": "short-answer",
+              "number": 25,
+              "text": "What two environmental conditions cause perovskite cells to degrade faster than silicon?",
+              "answer": "moisture and heat",
+              "wordLimit": 3
+            },
+            {
+              "type": "short-answer",
+              "number": 26,
+              "text": "Apart from battery storage, what two things does the writer say are necessary complements to expanded solar capacity?",
+              "answer": "smart energy management",
+              "wordLimit": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "partNumber": 3,
+      "questionRange": { "from": 27, "to": 40 },
+      "passage": {
+        "title": "The Navigational Mysteries of Animal Migration",
+        "subtitle": "Scientists are uncovering the remarkable biological mechanisms that guide animals across vast distances",
+        "paragraphs": [
+          {
+            "label": "A",
+            "heading": "An ancient puzzle",
+            "text": "Every year, billions of animals undertake journeys of extraordinary length and precision. Arctic terns fly from pole to pole and back again — a round trip of some 70,000 kilometres. Monarch butterflies navigate from Canada to a specific forest in Mexico, a journey of up to 4,500 kilometres, accomplished by individuals that have never made the trip before. Humpback whales cross entire ocean basins with a geographical accuracy that rivals modern GPS systems. How these animals navigate has fascinated and puzzled scientists for centuries."
+          },
+          {
+            "label": "B",
+            "heading": "The role of the magnetic field",
+            "text": "One of the most compelling explanations involves the Earth's magnetic field. A growing body of evidence suggests that many migratory species possess a form of magnetoreception — the ability to detect magnetic fields and use them as a compass. In birds, researchers have identified cryptochrome proteins in the eye that may interact with the planet's magnetic field through quantum mechanical processes. Sea turtles appear to use both the intensity and inclination of the field to determine their position, allowing them to return to the exact beach where they hatched decades earlier."
+          },
+          {
+            "label": "C",
+            "heading": "Celestial cues and landmarks",
+            "text": "The magnetic sense is rarely the only tool at an animal's disposal. Many species also use celestial cues — the position of the sun, the pattern of stars, or the plane of polarised light — to orient themselves. Migratory songbirds have been shown to calibrate their magnetic compass using the rotation of the night sky around the celestial north pole during their first autumn. Landmarks, both visual and olfactory, supplement these celestial and magnetic systems, particularly during the final stages of a journey when precision becomes paramount."
+          },
+          {
+            "label": "D",
+            "heading": "Inherited maps and individual learning",
+            "text": "A long-standing question in migration science concerns how much of navigational ability is innate and how much is learned. Research on first-year migratory birds, which in many species travel independently of adults, suggests that a genetic programme provides a basic vector — a direction and approximate distance. This programme, however, is not infinitely precise, and young animals gradually refine their routes through experience. In species such as whooping cranes, juveniles that migrate alongside experienced adults develop superior navigational skills, demonstrating the importance of social learning."
+          },
+          {
+            "label": "E",
+            "heading": "Chemical signposts",
+            "text": "Olfaction — the sense of smell — plays a larger role in navigation than was historically appreciated. Pacific salmon are perhaps the best-studied example: they imprint on the unique chemical signature of the stream in which they hatched and use this olfactory memory to locate it precisely when returning years later to spawn. Recent research has also suggested that some seabirds use odour maps of the ocean surface, detecting gradients of compounds such as dimethyl sulphide to orient themselves far from any visible landmarks."
+          },
+          {
+            "label": "F",
+            "heading": "Threats to migratory pathways",
+            "text": "Human activity is disrupting migratory systems in multiple ways. Light pollution interferes with the celestial orientation of birds and insects; some species are fatally attracted to artificial lights, colliding with buildings in their millions each year. Noise pollution — particularly from shipping and sonar — disrupts the acoustic cues used by whales and dolphins. Climate change is altering the timing of seasonal events, creating mismatches between the arrival of migratory species and the peak availability of the food resources they depend upon."
+          },
+          {
+            "label": "G",
+            "heading": "Conservation and future research",
+            "text": "Protecting migratory species requires international cooperation, since their journeys frequently cross political boundaries. Conservation efforts increasingly focus on safeguarding entire flyways and migration corridors rather than isolated habitats. Advances in miniaturised tracking technology — satellite tags light enough for small birds to carry — are enabling scientists to map routes in unprecedented detail, revealing bottlenecks, stopovers, and critical resting sites that warrant protection. Understanding how animals navigate is not merely an academic exercise; it has direct implications for the survival of some of the planet's most remarkable creatures."
+          }
+        ]
+      },
+      "questionGroups": [
+        {
+          "type": "yes-no-not-given",
+          "instruction": "Do the following statements agree with the claims of the writer? Write YES if the statement agrees with the claims of the writer, NO if the statement contradicts the claims of the writer, or NOT GIVEN if it is impossible to say what the writer thinks about this.",
+          "questionRange": { "from": 27, "to": 33 },
+          "questions": [
+            {
+              "type": "yes-no-not-given",
+              "number": 27,
+              "text": "The navigational abilities of migratory animals have been a subject of scientific curiosity for a very long time.",
+              "answer": "YES"
+            },
+            {
+              "type": "yes-no-not-given",
+              "number": 28,
+              "text": "Magnetoreception in birds is now fully understood at the molecular level.",
+              "answer": "NOT GIVEN"
+            },
+            {
+              "type": "yes-no-not-given",
+              "number": 29,
+              "text": "Migratory birds rely exclusively on the magnetic field to find their way.",
+              "answer": "NO"
+            },
+            {
+              "type": "yes-no-not-given",
+              "number": 30,
+              "text": "First-year migratory birds are generally incapable of travelling without adult guidance.",
+              "answer": "NO"
+            },
+            {
+              "type": "yes-no-not-given",
+              "number": 31,
+              "text": "The olfactory abilities of Pacific salmon were among the first navigation mechanisms to be scientifically studied.",
+              "answer": "NOT GIVEN"
+            },
+            {
+              "type": "yes-no-not-given",
+              "number": 32,
+              "text": "Artificial lighting is contributing to the deaths of large numbers of birds each year.",
+              "answer": "YES"
+            },
+            {
+              "type": "yes-no-not-given",
+              "number": 33,
+              "text": "Conservation of migratory species is best achieved by protecting individual nesting sites rather than entire routes.",
+              "answer": "NO"
+            }
+          ]
+        },
+        {
+          "type": "matching-headings",
+          "instruction": "The passage has seven paragraphs, A–G. Choose the correct heading for each paragraph from the list of headings below.",
+          "questionRange": { "from": 34, "to": 40 },
+          "headingOptions": [
+            { "label": "i",    "text": "How smell guides animals to their origins" },
+            { "label": "ii",   "text": "The balance between instinct and experience" },
+            { "label": "iii",  "text": "A phenomenon that has long intrigued researchers" },
+            { "label": "iv",   "text": "Detecting invisible forces in the environment" },
+            { "label": "v",    "text": "The economic cost of disrupted migration" },
+            { "label": "vi",   "text": "Multiple sensory systems working in combination" },
+            { "label": "vii",  "text": "Technology and international efforts to safeguard migration" },
+            { "label": "viii", "text": "How human development threatens ancient routes" }
+          ],
+          "questions": [
+            { "type": "matching-headings", "number": 34, "paragraphLabel": "A", "answer": "iii" },
+            { "type": "matching-headings", "number": 35, "paragraphLabel": "B", "answer": "iv" },
+            { "type": "matching-headings", "number": 36, "paragraphLabel": "C", "answer": "vi" },
+            { "type": "matching-headings", "number": 37, "paragraphLabel": "D", "answer": "ii" },
+            { "type": "matching-headings", "number": 38, "paragraphLabel": "E", "answer": "i" },
+            { "type": "matching-headings", "number": 39, "paragraphLabel": "F", "answer": "viii" },
+            { "type": "matching-headings", "number": 40, "paragraphLabel": "G", "answer": "vii" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -18,9 +18,10 @@ export default function Header() {
   const [settingsDropdownOpen, setSettingsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const isAuthenticated = !!session;
+  const isLoading = status === 'loading';
+  const isAuthenticated = status === 'authenticated';
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -89,7 +90,9 @@ export default function Header() {
 
           {/* Right Side: Auth Buttons OR User Menu */}
           <div className="flex items-center gap-2 md:gap-3">
-            {isAuthenticated ? (
+            {isLoading ? (
+              <div className="w-24 h-8 bg-gray-100 rounded-lg animate-pulse" />
+            ) : isAuthenticated ? (
               // Authenticated User Menu
               <>
                 {/* Notification - Hidden on mobile */}
