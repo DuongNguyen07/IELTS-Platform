@@ -76,7 +76,7 @@ export async function POST(req: Request) {
     },
   });
 
-  revalidateTag('exams');
-  revalidateTag('dashboard');
+  revalidateTag('exams', { expire: 0 });
+  revalidateTag('dashboard', { expire: 0 });
   return NextResponse.json(exam, { status: 201 });
 }

@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { authOptions } from "server/config/auth";
 import Header from 'client/components/layout/Header';
 import Footer from 'client/components/layout/Footer';
@@ -6,9 +7,9 @@ import Hero from '@/components/features/landing/sections/Hero';
 import Features from '@/components/features/landing/sections/Features';
 import CTA from '@/components/features/landing/sections/CTA';
 import Container from 'client/components/layout/Container';
-import WelcomeBanner from 'client/components/features/dashboard/WelcomeBanner';
-import ContinueLearning from 'client/components/features/dashboard/ContinueLearning';
-import QuickActions from 'client/components/features/dashboard/QuickActions';
+import WelcomeBanner from '@/components/features/WelcomePage/WelcomeBanner';
+import ContinueLearning from '@/components/features/WelcomePage/ContinueLearning';
+import QuickActions from '@/components/features/WelcomePage/QuickActions';
 import prisma from 'server/lib/prisma';
 
 async function getHomeData(userId: string) {
@@ -42,6 +43,10 @@ async function getHomeData(userId: string) {
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
+
+  if (session?.user?.role === "admin") {
+    redirect("/admin/exams");
+  }
 
   if (!session?.user) {
     return (

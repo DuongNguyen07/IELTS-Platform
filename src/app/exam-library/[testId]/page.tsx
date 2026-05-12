@@ -10,41 +10,51 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Container from '@/components/layout/Container';
 import LoadingState from '@/components/ui/LoadingState';
-
 import TestInfoCard from '@/components/features/pre-exam/TestInfoCard';
 import TestPartsList from '@/components/features/pre-exam/TestPartsList';
 import TestModeSelector from '@/components/features/pre-exam/TestModeSelector';
 import InstructionsCard from '@/components/features/pre-exam/InstructionsCard';
 import ExamCTA from '@/components/features/pre-exam/ExamCTA';
+import Button from '@/client/components/ui/Button';
 
 import { buildInitialParts, LEVEL_LABEL } from '@/components/features/pre-exam/constants';
 import type { TestMode, TestPart } from '@/components/features/pre-exam/types';
-import { EXAM_LIBRARY_TESTS } from '@/shared/constants';
-import { EXAM_ID_TO_READING_SLUG } from '@/shared/data/exams/reading';
+import type { ExamTest } from '@/shared/constants';
 
 export default function PreExamPage() {
   const { status } = useSession();
   const router = useRouter();
   const params = useParams();
+  const slug = params?.testId as string;
 
-  const testId = Number(params?.testId);
-  const test = EXAM_LIBRARY_TESTS.find((t) => t.id === testId) ?? null;
-
+  const [test, setTest] = useState<ExamTest | null>(null);
+  const [notFound, setNotFound] = useState(false);
   const [testMode, setTestMode] = useState<TestMode>('timed');
-  const [testParts, setTestParts] = useState<TestPart[]>(() =>
-    test ? buildInitialParts(test) : []
-  );
+  const [testParts, setTestParts] = useState<TestPart[]>([]);
 
   // Auth guard
   useEffect(() => {
     if (status === 'unauthenticated') router.push('/login');
   }, [status, router]);
 
-  if (status === 'loading') return <LoadingState message="Loading test details..." />;
+  useEffect(() => {
+    if (status !== 'authenticated' || !slug) return;
+    fetch(`/api/exams/${slug}`)
+      .then((r) => {
+        if (r.status === 404) { setNotFound(true); return null; }
+        return r.json();
+      })
+      .then((data: ExamTest | null) => {
+        if (!data) return;
+        setTest(data);
+        setTestParts(buildInitialParts(data));
+      });
+  }, [status, slug]);
+
+  if (status === 'loading' || (!test && !notFound)) return <LoadingState message="Loading test details..." />;
   if (status === 'unauthenticated') return null;
 
-  // Unknown test ID
-  if (!test) {
+  if (notFound || !test) {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
@@ -52,7 +62,7 @@ export default function PreExamPage() {
           <div className="text-center flex flex-col gap-4">
             <p className="text-gray-500 text-lg">Test not found.</p>
             <Link href="/exam-library" className="text-primary font-semibold hover:underline">
-              ← Back to Exam Library
+              Back to Exam Library
             </Link>
           </div>
         </main>
@@ -73,13 +83,14 @@ export default function PreExamPage() {
 
   const handleStartTest = () => {
     if (test.type === 'reading') {
-      const slug = EXAM_ID_TO_READING_SLUG[testId];
-      if (slug) {
-        router.push(`/exam/${slug}/reading`);
-        return;
-      }
+      const checkedNums = testParts
+        .filter((p) => p.checked)
+        .map((p) => { const m = p.id.match(/(\d+)$/); return m ? Number(m[1]) : null; })
+        .filter((n): n is number => n !== null);
+      const params = new URLSearchParams({ mode: testMode, parts: checkedNums.join(',') });
+      router.push(`/exam/${slug}/reading?${params}`);
+      return;
     }
-    // TODO: add routing for listening, writing, speaking when implemented
     console.warn('Exam type not yet implemented:', test.type);
   };
 
@@ -90,17 +101,16 @@ export default function PreExamPage() {
       <main className="flex-1">
         <Container>
           <div className="py-10 flex flex-col gap-8 max-w-3xl mx-auto">
-
-            {/* Back to Exam Library */}
-            <Link
-              href="/exam-library"
-              className="inline-flex items-center gap-1.5 text-base text-gray-600 hover:text-primary transition-colors w-fit"
+            <Button
+              variant="test"
+              size="small"
+              fullWidth={false}
+              className="w-fit"
+              onClick={() => router.push('/exam-library')}
             >
               <ArrowBackIcon style={{ fontSize: '1rem' }} />
               Back to Exam Library
-            </Link>
-
-            {/* Title + level badge */}
+            </Button>
             <div className="flex items-start justify-between gap-4">
               <h1 className="text-gray-900 text-4xl font-black tracking-tight leading-tight">
                 {test.title}

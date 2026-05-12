@@ -58,7 +58,7 @@ export default function AdminSidebar() {
       {/* Footer */}
       <div className="px-6 py-4 text-xs opacity-50" style={{ borderTop: '1px solid oklch(0.3 0.02 260 / 0.4)' }}>
         {email && <p className="truncate mb-1">{email}</p>}
-        <p>IELTS Platform · v1.0</p>
+        <p>IELTS Booster · v1.0</p>
       </div>
     </aside>
   );

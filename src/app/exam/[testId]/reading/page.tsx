@@ -17,6 +17,10 @@ export default function ReadingExamPage() {
 
   const testId = Array.isArray(params?.testId) ? params.testId[0] : (params?.testId as string);
   const testMode = (searchParams?.get('mode') ?? 'timed') as 'timed' | 'practice';
+  const rawParts = searchParams?.get('parts');
+  const selectedParts = rawParts
+    ? rawParts.split(',').map(Number).filter((n) => n >= 1 && n <= 3)
+    : [1, 2, 3];
 
   const [exam, setExam] = useState<ReadingExamData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -54,5 +58,5 @@ export default function ReadingExamPage() {
     );
   }
 
-  return <ReadingExam exam={exam} testMode={testMode} />;
+  return <ReadingExam exam={exam} testMode={testMode} selectedParts={selectedParts} />;
 }

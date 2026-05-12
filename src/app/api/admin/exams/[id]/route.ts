@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import prisma from '@/server/lib/prisma';
 import { requireAdmin } from '@/server/lib/adminAuth';
 import { ExamUploadSchema } from '@/shared/validation/examSchema';
@@ -6,12 +7,13 @@ import { ExamUploadSchema } from '@/shared/validation/examSchema';
 /** PATCH /api/admin/exams/[id] — update exam metadata or data */
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { error } = await requireAdmin();
   if (error) return error;
 
-  const existing = await prisma.examContent.findUnique({ where: { id: params.id } });
+  const { id } = await params;
+  const existing = await prisma.examContent.findUnique({ where: { id } });
   if (!existing) {
     return NextResponse.json({ error: 'Exam not found' }, { status: 404 });
   }
@@ -23,11 +25,9 @@ export async function PATCH(
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // Allow partial updates — only validate full payload if `data` is present
   const { data: examData, isPublished, difficulty, slug } = body as Record<string, unknown>;
 
   if (examData !== undefined) {
-    // Full re-upload — validate through ExamUploadSchema
     const parsed = ExamUploadSchema.safeParse({
       slug: slug ?? existing.slug,
       skill: existing.skill,
@@ -43,7 +43,7 @@ export async function PATCH(
     }
 
     const updated = await prisma.examContent.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         title: parsed.data.data.title,
         description: parsed.data.data.description,
@@ -55,34 +55,37 @@ export async function PATCH(
         version: { increment: 1 },
       },
     });
+    revalidateTag('exams', { expire: 0 });
     return NextResponse.json(updated);
   }
 
-  // Metadata-only update (publish toggle, difficulty)
   const updated = await prisma.examContent.update({
-    where: { id: params.id },
+    where: { id },
     data: {
       ...(isPublished !== undefined && { isPublished: Boolean(isPublished) }),
       ...(difficulty !== undefined && { difficulty: String(difficulty) }),
     },
   });
 
+  revalidateTag('exams', { expire: 0 });
   return NextResponse.json(updated);
 }
 
 /** DELETE /api/admin/exams/[id] */
 export async function DELETE(
   _req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { error } = await requireAdmin();
   if (error) return error;
 
-  const existing = await prisma.examContent.findUnique({ where: { id: params.id } });
+  const { id } = await params;
+  const existing = await prisma.examContent.findUnique({ where: { id } });
   if (!existing) {
     return NextResponse.json({ error: 'Exam not found' }, { status: 404 });
   }
 
-  await prisma.examContent.delete({ where: { id: params.id } });
+  await prisma.examContent.delete({ where: { id } });
+  revalidateTag('exams', { expire: 0 });
   return NextResponse.json({ success: true });
 }

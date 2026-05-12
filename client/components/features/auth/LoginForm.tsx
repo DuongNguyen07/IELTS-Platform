@@ -38,7 +38,7 @@ export default function LoginForm() {
       }
 
       const session = await getSession();
-      router.push(session?.user?.role === 'admin' ? '/admin/dashboard' : '/');
+      router.push(session?.user?.role === 'admin' ? '/admin/exams' : '/');
     } catch (error) {
       setError('Something went wrong. Please try again.');
       setLoading(false);

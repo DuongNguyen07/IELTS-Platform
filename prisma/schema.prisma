@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 
@@ -27,10 +28,13 @@ model User {
   journeyProgress Float?  @default(0) 
   lastActivity    DateTime?
   
+  // Role
+  role          String    @default("user")  // "user" | "admin"
+
   // Timestamps
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  
+
   // Relations
   tests         Test[]
   scores        Score[]
@@ -190,6 +194,30 @@ model Account {
   
   @@unique([provider, providerAccountId])
   @@map("accounts")
+}
+
+// EXAM CONTENT - Question Bank (managed via admin panel)
+
+model ExamContent {
+  id             String    @id @default(cuid())
+  slug           String    @unique   // URL identifier, e.g. 'rt-001'
+  skill          String              // 'reading' | 'listening' | 'writing' | 'speaking'
+  title          String              // denormalised from data for easy querying
+  description    String?
+  durationMins   Int       @default(60)
+  difficulty     String    @default("intermediate") // 'easy' | 'intermediate' | 'advanced'
+  totalQuestions Int       @default(40)
+  isPublished    Boolean   @default(false)
+  /// Full exam content — parts, passages, questions (ReadingExam shape minus id)
+  data           Json
+  version        Int       @default(1)
+  createdBy      String?             // admin email
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@map("exam_contents")
+  @@index([skill])
+  @@index([isPublished])
 }
 
 // VERIFICATION TOKEN - Email Verification

@@ -1,10 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import Switch from '@mui/material/Switch';
+import SortDropdown from '@/components/ui/SortDropdown';
 
-type Tab = 'General' | 'Exam Defaults' | 'Scoring' | 'Notifications';
-const TABS: Tab[] = ['General', 'Exam Defaults', 'Scoring', 'Notifications'];
+type Tab = 'General' | 'Exam Defaults' | 'Scoring' | 'Notifications' | 'Log Out';
+const TABS: Tab[] = ['General', 'Exam Defaults', 'Scoring', 'Notifications', 'Log Out'];
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
@@ -47,14 +50,13 @@ function TextInput({ defaultValue, placeholder }: { defaultValue?: string; place
 }
 
 function SelectInput({ options, defaultValue }: { options: string[]; defaultValue?: string }) {
+  const [value, setValue] = useState(defaultValue ?? options[0]);
   return (
-    <select
-      defaultValue={defaultValue}
-      className="w-full px-3 py-2 text-sm rounded-lg border bg-white focus:outline-none focus:ring-2 focus:ring-gray-900/20"
-      style={{ borderColor: 'var(--border)' }}
-    >
-      {options.map((o) => <option key={o}>{o}</option>)}
-    </select>
+    <SortDropdown
+      options={options.map((o) => ({ label: o, value: o }))}
+      value={value}
+      onChange={setValue}
+    />
   );
 }
 
@@ -68,8 +70,6 @@ function SaveButton() {
   );
 }
 
-// ── Tab panels ────────────────────────────────────────────────────────────────
-
 function GeneralPanel() {
   return (
     <Card>
@@ -78,7 +78,7 @@ function GeneralPanel() {
         <TextInput defaultValue="IELTS Booster" />
       </FieldRow>
       <FieldRow label="Support Email">
-        <TextInput defaultValue="support@ieltsbooster.com" placeholder="support@example.com" />
+        <TextInput defaultValue="support@ieltsbooster.com" placeholder="ieltsboostersupport@gmail.com" />
       </FieldRow>
       <FieldRow label="Default Language">
         <SelectInput options={['English', 'Vietnamese', 'Chinese', 'Japanese']} defaultValue="English" />
@@ -95,10 +95,10 @@ function ExamDefaultsPanel() {
   return (
     <Card>
       <h2 className="font-semibold text-gray-900 mb-2">Exam Defaults</h2>
-      <FieldRow label="Reading Duration (min)">
+      <FieldRow label="Reading Duration (mins)">
         <TextInput defaultValue="60" />
       </FieldRow>
-      <FieldRow label="Listening Duration (min)">
+      <FieldRow label="Listening Duration (mins)">
         <TextInput defaultValue="30" />
       </FieldRow>
       <FieldRow label="Total Questions">
@@ -140,11 +140,34 @@ function NotificationsPanel() {
   );
 }
 
+function LogoutPanel() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    router.push('/');
+  };
+
+  return (
+    <Card>
+      <h2 className="font-semibold text-gray-900 mb-4">Log Out</h2>
+      <p className="text-sm text-gray-700 mb-6">Are you sure you want to log out? Make sure to save any unsaved changes before proceeding.</p>
+      <button
+        onClick={handleLogout}
+        className="bg-red-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-red-500 transition-colors"
+      >
+        Log Out
+      </button>
+    </Card>
+  );
+}
 const PANELS: Record<Tab, React.ReactNode> = {
   'General':       <GeneralPanel />,
   'Exam Defaults': <ExamDefaultsPanel />,
   'Scoring':       <ScoringPanel />,
   'Notifications': <NotificationsPanel />,
+  'Log Out':      <LogoutPanel />,
+
 };
 
 export default function SettingsTabs() {
@@ -169,7 +192,6 @@ export default function SettingsTabs() {
         ))}
       </nav>
 
-      {/* Panel */}
       <div className="md:col-span-9">
         {PANELS[activeTab]}
       </div>
