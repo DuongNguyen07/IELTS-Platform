@@ -1,0 +1,78 @@
+services:
+
+  # ── Supporting services (always start in dev: docker-compose up) ────────────
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: ielts_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ielts_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: ielts_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ai:
+    build: ./ai-service
+    container_name: ielts_ai
+    ports:
+      - "8000:8000"
+    volumes:
+      - whisper_models:/root/.cache/whisper   # cache model between restarts
+    environment:
+      WHISPER_MODEL: ${WHISPER_MODEL:-base}   # tiny | base | small | medium | large
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Production only (docker-compose --profile production up) ────────────────
+
+  web:
+    build: .
+    container_name: ielts_web
+    ports:
+      - "3000:3000"
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ielts_dev
+      DIRECT_URL: postgresql://postgres:postgres@postgres:5432/ielts_dev
+      REDIS_URL: redis://redis:6379
+      AI_SERVICE_URL: http://ai:8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+    profiles: [production]
+
+volumes:
+  postgres_data:
+  redis_data:
+  whisper_models:

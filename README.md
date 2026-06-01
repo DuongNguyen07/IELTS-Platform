@@ -1,71 +1,44 @@
-#  IELTS Booster - AI-Powered IELTS Practice Platform
+IELTS Booster - AI-Powered IELTS Practice Platform
 
-An intelligent IELTS preparation platform featuring AI-powered scoring, real-time feedback, and comprehensive practice modules for all four IELTS sections.
+A full-stack IELTS preparation platform with AI-powered scoring and practice modules for all four IELTS skills. Individual project, 2025-2026.
 
-## Project Overview
-
-IELTS Booster is a full-stack web application designed to help students achieve their target IELTS band scores through:
-- **AI-Powered Scoring**: Automated essay and speaking evaluation
-- **Comprehensive Practice**: All 4 IELTS modules (Reading, Writing, Listening, Speaking)
-- **Real-time Feedback**: Instant performance insights and improvement suggestions
-- **Progress Tracking**: Detailed analytics and score history
-- **Study Material**: List of necessary materials for IELTS
-- **Individual Project** | Full-stack Project | 2025-2026
+Tech Stack: Next.js 15, React 19, Tailwind CSS, MUI, Prisma ORM, PostgreSQL (Supabase), NextAuth.js, Python FastAPI (AI service), Docker
 
 ---
 
-## New Features 
-Exam Library:
-- Filterable and searchable test grid with tab categories
-- Sort by recency, difficulty and duration
-- Custom SortDropdown UI component shared across pages
+Infrastructure
 
-Pre-Exam Page (`/exam-library/[testId]`):
-- Per-skill selectable sub-parts (Listening sections, Reading passages, Writing tasks, Speaking parts)
-- Full IELTS general test with 4 top-level sections
-- Timed vs Practice mode toggle
-- Live expected duration counter
-- Split into focused components: TestInfoCard, TestPartsList, TestModeSelector, InstructionsCard, ExamCTA
+Local development uses Docker Compose with three services alongside the Next.js dev server: PostgreSQL for the database, Redis for caching and rate limiting, and a Python FastAPI service for AI workloads. The AI service runs Whisper for speech-to-text and calls the Claude API for writing and speaking scoring. A production Dockerfile is included using Next.js standalone output.
 
-Study Materials Page (`/material`):
-- Sidebar filters: category, difficulty level, file format
-- Material cards with real thumbnail images, star ratings, hover overlays
-- Shared SortDropdown for consistent UX across pages
-- Pagination reused from Exam Library
+---
 
-TypeScript Migration:
-- Full codebase migrated from JavaScript (.jsx/.js) to TypeScript (.tsx/.ts)
-- Strict typing across all components, API routes, services and shared utilities
+Completed
 
-Security:
-- Password hashing with bcryptjs (12 rounds)
-- Input sanitization
-- Rate limiting
-- SQL injection prevention (Prisma ORM)
-- Protected API routes
-- Environment variables secured
+Authentication: registration, login, NextAuth.js sessions, role-based access (user / admin), bcrypt password hashing, security headers, rate limiting, protected API routes
 
-![LoginPage](./docs/screenshots/login-page.png)
-![SignUpPage](./docs/screenshots/sign-up-page.png)
-![LandingPage](./docs/screenshots/landing-page1.png)
-![LandingPage](./docs/screenshots/landing-page.png)
-![DashboardPage](./docs/screenshots/dashboard-page.png)
+Exam Library: filterable and searchable grid by skill, difficulty, and duration; SortDropdown component; pagination
 
-##  Tech Stack
+Pre-Exam Page: per-skill part selection, timed vs practice mode toggle, expected duration counter
 
-### Frontend
-- **Framework**: Next.js 15 (App Router)
-- **Styling**: Tailwind CSS
-- **UI Components**: Custom component library, MUI
-- **State Management**: React Hooks
+Reading Module: split-panel with drag resizer, full IELTS question type support, timer, question flagging, answered/unanswered pill footer
 
-### Backend (Planed)
-- **Authentication**: NextAuth.js v5
-- **Database**: Prisma ORM with SQLite (dev) / PostgreSQL (production)
-- **Password Security**: bcrypt
-- **API**: Next.js API Routes
+Listening Module: same split-panel layout as Reading, integrated audio player per section, all listening question types
 
-### AI Integration (Planned)
-- **Essay Scoring**: OpenAI GPT-4 / Claude API
-- **Speech-to-Text**: OpenAI Whisper API
-- **Feedback Generation**: Custom prompts with LLM
+Writing Module: split-panel with task prompt card, image visual support (charts, maps, diagrams), live word count editor with minimum threshold, Task 1 / Task 2 footer pills
+
+Speaking Module: microphone test screen with live waveform, question card, transcript box, animated record button with countdown and auto-submit, Part 1 / 2 / 3 structure with correct time limits
+
+Admin Exam Builder: form-based exam creation for all four skills replacing raw JSON upload, passage and question group editors, preview modal before saving, Zod validation
+
+AI Service: Whisper transcription endpoint, Claude writing scoring endpoint, Claude speaking scoring endpoint
+
+---
+
+Next Sprint
+
+- Wire Speaking audio output to the Whisper transcription proxy and stream results to the transcript box
+- Post-exam results page with band score, feedback, strengths and improvements
+- Connect Writing and Speaking submissions to Claude scoring
+- Dashboard analytics: band score history, skill breakdown, study goal progress
+- Redis session caching and rate limiting middleware
+- Upload real exam content for all four skills via the admin builder

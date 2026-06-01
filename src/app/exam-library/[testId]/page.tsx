@@ -82,13 +82,19 @@ export default function PreExamPage() {
   };
 
   const handleStartTest = () => {
+    const checkedNums = testParts
+      .filter((p) => p.checked)
+      .map((p) => { const m = p.id.match(/(\d+)$/); return m ? Number(m[1]) : null; })
+      .filter((n): n is number => n !== null);
+
     if (test.type === 'reading') {
-      const checkedNums = testParts
-        .filter((p) => p.checked)
-        .map((p) => { const m = p.id.match(/(\d+)$/); return m ? Number(m[1]) : null; })
-        .filter((n): n is number => n !== null);
       const params = new URLSearchParams({ mode: testMode, parts: checkedNums.join(',') });
       router.push(`/exam/${slug}/reading?${params}`);
+      return;
+    }
+    if (test.type === 'listening') {
+      const params = new URLSearchParams({ mode: testMode, sections: checkedNums.join(',') });
+      router.push(`/exam/${slug}/listening?${params}`);
       return;
     }
     console.warn('Exam type not yet implemented:', test.type);

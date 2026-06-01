@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   const parsed = ExamUploadSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: 'Validation failed', details: parsed.error.flatten() },
+      { error: 'Validation failed', details: parsed.error.issues.map((i) => `${i.path.join('.') || 'root'}: ${i.message}`) },
       { status: 422 }
     );
   }
@@ -61,14 +61,18 @@ export async function POST(req: Request) {
     );
   }
 
+  // SpeakingExamData has no durationMins; WritingExamData/SpeakingExamData have no
+  // totalQuestions — omit them and let the Prisma schema defaults (60 / 40) apply.
+  const d = data as Record<string, unknown>;
+
   const exam = await prisma.examContent.create({
     data: {
       slug,
       skill,
-      title: data.title,
+      title:       data.title,
       description: data.description,
-      durationMins: data.durationMins,
-      totalQuestions: data.totalQuestions,
+      ...(typeof d.durationMins   === 'number' && { durationMins:   d.durationMins }),
+      ...(typeof d.totalQuestions === 'number' && { totalQuestions: d.totalQuestions }),
       difficulty,
       isPublished,
       data: data as object,

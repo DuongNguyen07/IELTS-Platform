@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
@@ -150,22 +150,46 @@ export default function ExamList({ initialExams }: Props) {
                       </td>
                       <td className="px-5 py-3.5 text-gray-500">{fmt(exam.updatedAt)}</td>
                       <td className="px-5 py-3.5">
-                        <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => togglePublish(exam)}
-                            disabled={busy === exam.id}
-                            className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-40"
-                            title={exam.isPublished ? 'Unpublish' : 'Publish'}
+                        <div className="flex items-center gap-1.5">
+                          {exam.isPublished ? (
+                            <button
+                              onClick={() => togglePublish(exam)}
+                              disabled={busy === exam.id}
+                              className="px-2.5 py-1 rounded-md text-xs font-semibold border border-amber-300 text-amber-700 hover:bg-amber-50 transition-colors disabled:opacity-40"
+                            >
+                              {busy === exam.id ? '…' : 'Unpublish'}
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => togglePublish(exam)}
+                              disabled={busy === exam.id}
+                              className="px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-500 transition-colors disabled:opacity-40"
+                            >
+                              {busy === exam.id ? '…' : 'Publish'}
+                            </button>
+                          )}
+                          {exam.isPublished && (
+                            <Link
+                              href={`/exam/${exam.slug}/${exam.skill}`}
+                              target="_blank"
+                              className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+                              title="View live exam"
+                            >
+                              <OpenInNewIcon style={{ fontSize: '1rem', color: 'oklch(0.62 0.18 255)' }} />
+                            </Link>
+                          )}
+                          <Link
+                            href={`/admin/exams/${exam.id}/edit`}
+                            className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+                            title="Edit exam"
                           >
-                            <VisibilityIcon style={{ fontSize: '1rem', color: exam.isPublished ? 'oklch(0.62 0.18 255)' : 'oklch(0.554 0.046 257.417)' }} />
-                          </button>
-                          <Link href={`/admin/exams/new`} className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
                             <EditIcon style={{ fontSize: '1rem', color: 'oklch(0.554 0.046 257.417)' }} />
                           </Link>
                           <button
                             onClick={() => deleteExam(exam)}
                             disabled={busy === exam.id}
                             className="p-1.5 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-40"
+                            title="Delete exam"
                           >
                             <DeleteIcon style={{ fontSize: '1rem', color: 'oklch(0.577 0.245 27.325)' }} />
                           </button>
